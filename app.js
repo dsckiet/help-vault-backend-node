@@ -1,7 +1,7 @@
 const express = require("express");
 
 const app = express();
-
+require("./config/dbConnection");
 module.exports = () => {
 	app.listen(8081, () => {
 		console.log("🚀 Api Running at http://localhost:8081");
