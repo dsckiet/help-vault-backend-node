@@ -1,13 +1,34 @@
-const express = require("express");
+const cluster = require("cluster");
+const os = require("os");
+// require("newrelic");
 
-const app = express();
+const runExpressServer = require("./app");
+let { NODE_ENV } = require("./config/secret");
 
-app.listen(8081, () => {
-	console.log("🚀 Api Running at http://localhost:8081");
-});
+// Check if current process is master.
+if (cluster.isMaster) {
+	// Get total CPU cores.
+	let cpuCount;
+	if (NODE_ENV === "production") {
+		cpuCount = os.cpus().length;
+	} else {
+		cpuCount = 1;
+	}
+	console.log(cpuCount);
+	// Spawn a worker for every core.
+	for (let j = 0; j < cpuCount; j++) {
+		cluster.fork();
+	}
+} else {
+	// This is not the master process, so we spawn the express server.
+	console.log("here!!");
+	runExpressServer();
+}
 
-app.get("/", (req, res) => {
-	return res.status(200).json({
-		msg: "Welcome to the home route!"
-	});
+// Cluster API has a variety of events.
+// Here we are creating a new process if a worker die.
+cluster.on("exit", function (worker) {
+	console.log(`Worker ${worker.id} died'`);
+	console.log(`Staring a new one...`);
+	cluster.fork();
 });
