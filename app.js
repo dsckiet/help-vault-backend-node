@@ -4,6 +4,7 @@ const status = require("./utility/statusCodes")
 const app = express();
 require("./config/dbConnection");
 
+app.use("/api",require("./src/routes"))
 app.get("/", (req, res) => {
 	logger.info("Get request at home route")
 	return res.status(status.OK).json({
