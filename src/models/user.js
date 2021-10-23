@@ -10,6 +10,9 @@ const userSchema = new Schema ({
     encryptedPassword: {
         type: String,
     },
+},
+{
+    timestamps: true
 })
 
 module.exports = require("mongoose").model("User",userSchema);

@@ -1,4 +1,5 @@
-const {signUpHandler} = require("./controllers/auth")
+const {signUpHandler,signInHandler} = require("./controllers/auth")
 module.exports = {
-    signUpHandler
+    signUpHandler,
+    signInHandler
 }
