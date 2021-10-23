@@ -1,12 +1,13 @@
 const cluster = require("cluster");
 const os = require("os");
 const process = require('process');
-
-const runExpressServer = require("./app");
+const logger = require("./utility/logger/logger")
+const {PORT} = require("./config/secret");
+const app = require("./app");
 let { NODE_ENV } = require("./config/secret");
 
 if (cluster.isPrimary) {
-	console.log(`Master ${process.pid} is running`);
+	logger.info(`Master ${process.pid} is running`);
 	let cpuCount;
 	if (NODE_ENV === "production") {
 		cpuCount = os.cpus().length;
@@ -17,12 +18,14 @@ if (cluster.isPrimary) {
 		cluster.fork();
 	}
 } else {
-	console.log(`Worker ${process.pid} started`);
-	runExpressServer();
+	logger.info(`Worker ${process.pid} started`);
+	app.listen(PORT, () => {
+		logger.info(`🚀 Api Running at http://localhost:${PORT}`);
+	});
 }
 
 cluster.on("exit", (worker) => {
-	console.log(`Worker ${worker.id} died'`);
-	console.log(`Staring a new one...`);
+	logger.info(`Worker ${worker.id} died'`);
+	logger.info(`Staring a new one...`);
 	cluster.fork();
 });

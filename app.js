@@ -1,15 +1,13 @@
 const express = require("express");
-const {PORT} = require("./config/secret");
+const logger = require("./utility/logger/logger")
+const status = require("./utility/statusCodes")
 const app = express();
 require("./config/dbConnection");
-module.exports = () => {
-	app.listen(PORT, () => {
-		console.log(`🚀 Api Running at http://localhost:${PORT}`);
+app.get("/", (req, res) => {
+	logger.info("Get request at home route")
+	return res.status(status.OK).json({
+		msg: "Welcome to the home route!"
 	});
+});
 
-	app.get("/", (req, res) => {
-		return res.status(200).json({
-			msg: "Welcome to the home route!"
-		});
-	});
-};
+module.exports = app;
