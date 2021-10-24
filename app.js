@@ -1,9 +1,11 @@
 const express = require("express");
+const cors = require("cors");
 const logger = require("./utility/logger/logger")
 const status = require("./utility/statusCodes")
 const app = express();
 require("./config/dbConnection");
 
+app.use(cors());
 app.use(express.json()); 
 app.use(express.urlencoded());
 app.use("/api",require("./src/routes"))
