@@ -45,6 +45,10 @@ const profileSchema = new Schema(
 		state: {
 			type: String,
 			required: true
+		},
+		bio: {
+			type: String,
+			required: true
 		}
 	},
 	{
