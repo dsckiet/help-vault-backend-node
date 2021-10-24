@@ -10,6 +10,10 @@ const userSchema = new Schema ({
     encryptedPassword: {
         type: String,
     },
+    profile: {
+        type: Schema.Types.ObjectId,
+            ref: "Profile",   
+    }
 },
 {
     timestamps: true

@@ -17,4 +17,10 @@ app.get("/", (req, res) => {
 	});
 });
 
+app.get('/failurejson', function(req, res) {
+    res.status(400).json({
+        msg:  "Authentication Failed Login Again",
+    });
+});
+
 module.exports = app;
