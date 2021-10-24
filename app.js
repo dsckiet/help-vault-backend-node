@@ -1,7 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const logger = require("./utility/logger/logger");
-const status = require("./utility/statusCodes");
 const app = express();
 require("./config/dbConnection");
 
