@@ -8,7 +8,7 @@ assignees: ""
 
 **Domain**
 
-- [ ] Development
-- [ ] Testing
-- [ ] Deployment
-- [ ] Others
+-   [ ] Development
+-   [ ] Testing
+-   [ ] Deployment
+-   [ ] Others

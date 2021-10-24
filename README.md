@@ -5,29 +5,31 @@
 </p>
 
 ---
-[![DOCS](https://img.shields.io/badge/Documentation-see%20docs-green?style=for-the-badge&logo=appveyor)](INSERT_LINK_FOR_DOCS_HERE) 
-  [![UI ](https://img.shields.io/badge/User%20Interface-Link%20to%20UI-orange?style=for-the-badge&logo=appveyor)](INSERT_UI_LINK_HERE)
 
+[![DOCS](https://img.shields.io/badge/Documentation-see%20docs-green?style=for-the-badge&logo=appveyor)](INSERT_LINK_FOR_DOCS_HERE)
+[![UI ](https://img.shields.io/badge/User%20Interface-Link%20to%20UI-orange?style=for-the-badge&logo=appveyor)](INSERT_UI_LINK_HERE)
 
 ## Functionalities
-- [ ]  < ADD FUNCTIONALITY >
-- [ ]  < ADD FUNCTIONALITY >
+
+-   [ ] < ADD FUNCTIONALITY >
+-   [ ] < ADD FUNCTIONALITY >
 
 <br>
 
-
 ## Instructions to run
 
-* Pre-requisites:
-	-  < add pre-requisite >
-	-  < add pre-requisite >
+-   Pre-requisites:
 
-* Directions to setup/install
+    -   < add pre-requisite >
+    -   < add pre-requisite >
+
+-   Directions to setup/install
+
 ```bash
 < insert code >
 ```
 
-* Directions to execute
+-   Directions to execute
 
 ```bash
 < insert code >
@@ -37,9 +39,7 @@
 
 ## Contributors
 
-* [ < ADD YOUR NAME > ](ADD_PROFILE_URL_HERE)
-
-
+-   [ < ADD YOUR NAME > ](ADD_PROFILE_URL_HERE)
 
 <br>
 <br>
