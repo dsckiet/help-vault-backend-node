@@ -6,5 +6,6 @@ module.exports = {
 	MONGO_URI:
 		process.env.NODE_ENV === "production"
 			? process.env.MONGO_URI_PROD
-			: process.env.MONGO_URI_DEV
+			: process.env.MONGO_URI_DEV,
+	SECRET: process.env.SECRET
 };
