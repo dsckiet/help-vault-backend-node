@@ -48,32 +48,28 @@ exports.signUpHandler = (req, res) => {
 exports.signInHandler = (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		return res.status(400).json({
-			msg: errors.array()[0].msg
-		});
+		return sendError(res,errors.array()[0].msg,BAD_REQUEST)
 	}
 	let { email, plainPassword } = req.body;
 	email.toLowerCase();
+	logger.info("Sigin In route accessed by : ", email);
 	User.findOne({ email }).exec((err, user) => {
 		if (err || !user) {
 			if (!user) {
-				console.log("some error occured");
+				logger.error("User not found! : ",email);
 			}
 			if (err) {
-				console.log(err);
+				logger.error("Some error occured : ", error);
+				
 			}
-			return res.status(400).json({
-				msg: "User with this email does not exist"
-			});
+			return sendError(res,"User not found!",BAD_REQUEST)
 		} else {
 			bcrypt.compare(
 				plainPassword,
 				user.encryptedPassword,
 				function (err, result) {
 					if (result != true) {
-						return res.status(400).json({
-							msg: "Please Enter correct Password"
-						});
+						return sendError(res,"Please Enter correct Password",BAD_REQUEST)
 					} else {
 						const payload = {
 							id: user.id,
@@ -84,11 +80,11 @@ exports.signInHandler = (req, res) => {
 							user.encryptedPassword = undefined;
 							user.createdAt = undefined;
 							user.updatedAt = undefined;
-							return res.status(200).json({
+							return sendSuccess(res,{
 								token: "Bearer " + token,
 								user,
 								msg: "User successfully loggedin!"
-							});
+							})
 						});
 					}
 				}
