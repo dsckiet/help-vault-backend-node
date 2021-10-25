@@ -5,21 +5,19 @@ var bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const saltRounds = 10;
 const { SECRET } = require("../../config/secret");
+const {sendSuccess,sendError} = require("../../utility/reponse")
+const {BAD_REQUEST} = require("../../utility/statusCodes")
 exports.signUpHandler = (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		return res.status(400).json({
-			msg: errors.array()[0].msg
-		});
+		return sendError(res,errors.array()[0].msg,BAD_REQUEST)
 	}
 	let { email, plainPassword } = req.body;
 	logger.info(`signup route used by ${email}`);
 	User.findOne({ email }).exec((err, user) => {
 		if (user) {
 			logger.error(`signup route used by ${email}: email already exist`);
-			return res.status(400).json({
-				msg: "User with this email already exist!"
-			});
+			return sendError(res,"User with this email already exist!",BAD_REQUEST)
 		} else {
 			bcrypt.hash(plainPassword, saltRounds, (err, hash) => {
 				email.toLowerCase();
@@ -32,14 +30,12 @@ exports.signUpHandler = (req, res) => {
 						logger.error(
 							`signup route used by ${email}: Failed to save user`
 						);
-						return res.status(400).json({
-							msg: "Failed to save user"
-						});
+						return sendError(res,"Failed to save user",BAD_REQUEST)
 					} else {
 						logger.info(
 							`signup route used by ${email}: successfull`
 						);
-						res.status(200).json({
+						return sendSuccess(res,{
 							msg: "User Created Successfully"
 						});
 					}
