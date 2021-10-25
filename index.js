@@ -1,8 +1,8 @@
 const cluster = require("cluster");
 const os = require("os");
-const process = require('process');
-const logger = require("./utility/logger/logger")
-const {PORT} = require("./config/secret");
+const process = require("process");
+const logger = require("./utility/logger/logger");
+const { PORT } = require("./config/secret");
 const app = require("./app");
 let { NODE_ENV } = require("./config/secret");
 
@@ -24,7 +24,7 @@ if (cluster.isPrimary) {
 	});
 }
 
-cluster.on("exit", (worker) => {
+cluster.on("exit", worker => {
 	logger.info(`Worker ${worker.id} died'`);
 	logger.info(`Staring a new one...`);
 	cluster.fork();

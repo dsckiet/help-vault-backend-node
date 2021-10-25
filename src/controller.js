@@ -1,5 +1,7 @@
-const {signUpHandler,signInHandler} = require("./controllers/auth")
+const { signUpHandler, signInHandler} = require("./controllers/auth");
+const {createProfileHandler} = require("./controllers/profile")
 module.exports = {
-    signUpHandler,
-    signInHandler
-}
+	signUpHandler,
+	signInHandler,
+	createProfileHandler
+};
