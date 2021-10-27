@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const logger = require("../utility/logger/logger");
-const status = require("../utility/statusCodes")
-const {NOT_AUTHORIZED} = require("../utility/statusCodes")
+const status = require("../utility/statusCodes");
+const { NOT_AUTHORIZED } = require("../utility/statusCodes");
 router.use("/auth", require("./routes/auth"));
 router.use("/profile", require("./routes/profile"));
 
