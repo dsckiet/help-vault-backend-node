@@ -1,7 +1,7 @@
 const {Profile,User} = require("../models");
 const { validationResult } = require("express-validator");
 const {sendSuccess,sendError} = require("../../utility/reponse")
-const {BAD_REQUEST} = require("../../utility/statusCodes")
+const {BAD_REQUEST,NOT_FOUND} = require("../../utility/statusCodes")
 const logger = require("../../utility/logger/logger")
 exports.createProfileHandler = (req, res) => {
     const errors = validationResult(req);
@@ -35,5 +35,16 @@ exports.createProfileHandler = (req, res) => {
             })
         }
         
+    })
+}
+
+exports.getProfileHandler = (req,res) => {
+    logger.info("Get profile accessed by : " + req.user.email);
+    User.findOne({email: req.user.email}).populate('profile').exec((err,user) => {
+        if(err || !user || !user.profile){
+            logger.error("Unable to find user profile of user :" + req.user.email);
+            return sendError(res,"Unable to found user profile",NOT_FOUND);
+        }
+        return sendSuccess(res,user.profile)
     })
 }

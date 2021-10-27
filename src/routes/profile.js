@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const passport = require("../../utility/passport/passport");
-const {createProfileHandler} = require("../controller")
+const {createProfileHandler,getProfileHandler} = require("../controller")
 const { check } = require("express-validator");
+
 router.post(
 	"/create",
 	[
@@ -43,5 +44,10 @@ router.post(
 	}),
 	createProfileHandler
 );
+
+router.get("/",passport.authenticate("jwt", {
+	session: false,
+	failureRedirect: "/api/failurejson"
+}),getProfileHandler)
 
 module.exports = router;
