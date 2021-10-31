@@ -1,4 +1,4 @@
-const {OK} = require("./statusCodes")
+const { OK } = require("./statusCodes");
 module.exports.sendError = (res, message, status) => {
 	res.status(status).json({
 		message,
@@ -9,8 +9,8 @@ module.exports.sendError = (res, message, status) => {
 
 module.exports.sendSuccess = (res, data) => {
 	res.status(OK).json({
-        message: "success",
-        error: false,
-        data
-    });
+		message: "success",
+		error: false,
+		data
+	});
 };

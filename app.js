@@ -9,5 +9,4 @@ app.use(express.urlencoded());
 app.use(require("passport").initialize());
 app.use("/api", require("./src/routes"));
 
-
 module.exports = app;

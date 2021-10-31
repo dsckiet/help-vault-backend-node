@@ -5,19 +5,23 @@ var bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const saltRounds = 10;
 const { SECRET } = require("../../config/secret");
-const {sendSuccess,sendError} = require("../../utility/reponse")
-const {BAD_REQUEST} = require("../../utility/statusCodes")
+const { sendSuccess, sendError } = require("../../utility/reponse");
+const { BAD_REQUEST } = require("../../utility/statusCodes");
 exports.signUpHandler = (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		return sendError(res,errors.array()[0].msg,BAD_REQUEST)
+		return sendError(res, errors.array()[0].msg, BAD_REQUEST);
 	}
 	let { email, plainPassword } = req.body;
 	logger.info(`signup route used by ${email}`);
 	User.findOne({ email }).exec((err, user) => {
 		if (user) {
 			logger.error(`signup route used by ${email}: email already exist`);
-			return sendError(res,"User with this email already exist!",BAD_REQUEST)
+			return sendError(
+				res,
+				"User with this email already exist!",
+				BAD_REQUEST
+			);
 		} else {
 			bcrypt.hash(plainPassword, saltRounds, (err, hash) => {
 				email.toLowerCase();
@@ -30,12 +34,16 @@ exports.signUpHandler = (req, res) => {
 						logger.error(
 							`signup route used by ${email}: Failed to save user`
 						);
-						return sendError(res,"Failed to save user",BAD_REQUEST)
+						return sendError(
+							res,
+							"Failed to save user",
+							BAD_REQUEST
+						);
 					} else {
 						logger.info(
 							`signup route used by ${email}: successfull`
 						);
-						return sendSuccess(res,{
+						return sendSuccess(res, {
 							msg: "User Created Successfully"
 						});
 					}
@@ -48,7 +56,7 @@ exports.signUpHandler = (req, res) => {
 exports.signInHandler = (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		return sendError(res,errors.array()[0].msg,BAD_REQUEST)
+		return sendError(res, errors.array()[0].msg, BAD_REQUEST);
 	}
 	let { email, plainPassword } = req.body;
 	email.toLowerCase();
@@ -56,20 +64,23 @@ exports.signInHandler = (req, res) => {
 	User.findOne({ email }).exec((err, user) => {
 		if (err || !user) {
 			if (!user) {
-				logger.error("User not found! : ",email);
+				logger.error("User not found! : ", email);
 			}
 			if (err) {
 				logger.error("Some error occured : ", error);
-				
 			}
-			return sendError(res,"User not found!",BAD_REQUEST)
+			return sendError(res, "User not found!", BAD_REQUEST);
 		} else {
 			bcrypt.compare(
 				plainPassword,
 				user.encryptedPassword,
 				function (err, result) {
 					if (result != true) {
-						return sendError(res,"Please Enter correct Password",BAD_REQUEST)
+						return sendError(
+							res,
+							"Please Enter correct Password",
+							BAD_REQUEST
+						);
 					} else {
 						const payload = {
 							id: user.id,
@@ -80,11 +91,11 @@ exports.signInHandler = (req, res) => {
 							user.encryptedPassword = undefined;
 							user.createdAt = undefined;
 							user.updatedAt = undefined;
-							return sendSuccess(res,{
+							return sendSuccess(res, {
 								token: "Bearer " + token,
 								user,
 								msg: "User successfully loggedin!"
-							})
+							});
 						});
 					}
 				}
