@@ -30,6 +30,10 @@ const jobSchema = new Schema({
     date: {
         type: String,
         required: true
+    },
+    status: {
+        type: Boolean,
+        default: true
     }
 },
 {

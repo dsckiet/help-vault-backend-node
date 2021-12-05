@@ -3,9 +3,11 @@ const {
 	createProfileHandler,
 	getProfileHandler
 } = require("./controllers/profile");
+const {addJobHandler} = require("./controllers/jobs")
 module.exports = {
 	signUpHandler,
 	signInHandler,
 	createProfileHandler,
-	getProfileHandler
+	getProfileHandler,
+	addJobHandler
 };
