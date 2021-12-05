@@ -29,3 +29,24 @@ exports.addJobHandler = (req,res) => {
         );
     }
 }
+
+exports.getJobsHandler = async (req,res) => {
+   let {lat, long} = req.body;
+  try {
+    let jobs = await Job.find({
+      location: {
+        $near: {
+          $maxDistance: 1000,
+          $geometry: {
+            type: "Point",
+            coordinates: [long , lat]
+          }
+        }
+      }
+    });
+
+    res.status(200).send(jobs);
+  } catch (e) {
+    res.status(500).send(e.message);
+  }
+}

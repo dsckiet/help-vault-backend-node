@@ -1,5 +1,15 @@
 const Schema = require("mongoose").Schema;
 
+const geoSchema = new Schema({
+    type: {
+      type: String,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number]
+    }
+  });  
+
 const jobSchema = new Schema({
     title: {
         type: String,
@@ -17,15 +27,8 @@ const jobSchema = new Schema({
         trim: true,
     },
     location: {
-        type: {
-            type: String, 
-            enum: ['Point'],
-            required: true
-          },
-          coordinates: {
-            type: [Number],
-            required: true
-          }
+        type: geoSchema,
+        index: '2dsphere'
     },
     date: {
         type: String,
