@@ -36,7 +36,7 @@ exports.getJobsHandler = async (req,res) => {
     let jobs = await Job.find({
       location: {
         $near: {
-          $maxDistance: 1000,
+          $maxDistance: 10000,
           $geometry: {
             type: "Point",
             coordinates: [long , lat]
@@ -44,9 +44,12 @@ exports.getJobsHandler = async (req,res) => {
         }
       }
     });
-
-    res.status(200).send(jobs);
+    return sendSuccess(res,jobs)
   } catch (e) {
-    res.status(500).send(e.message);
+    return sendError(
+      res,
+      "Failed to find jobs near you",
+      BAD_REQUEST
+  );
   }
 }
