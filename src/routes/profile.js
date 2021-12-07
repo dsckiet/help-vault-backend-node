@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const passport = require("../../utility/passport/passport");
 const { createProfileHandler, getProfileHandler } = require("../controller");
-const {createProfileChecks} = require("../checks")
+const { createProfileChecks } = require("../checks");
 
 router.post(
 	"/create",
