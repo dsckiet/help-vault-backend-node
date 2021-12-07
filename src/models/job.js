@@ -1,14 +1,5 @@
 const Schema = require("mongoose").Schema;
 
-// const geoSchema = new Schema({
-//     type: {
-//       type: String,
-//       default: 'Point'
-//     },
-//     coordinates: {
-//       type: [Number]
-//     }
-//   });  
 const geoSchema = require("./geo");
 const jobSchema = new Schema({
     title: {
@@ -37,7 +28,11 @@ const jobSchema = new Schema({
     status: {
         type: Boolean,
         default: true
-    }
+    },
+    volunteers: [{
+        type: Schema.Types.ObjectId,
+        ref: "user"
+    }]
 },
 {
     timestamps: true

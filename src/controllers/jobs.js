@@ -53,3 +53,24 @@ exports.getJobsHandler = async (req,res) => {
   );
   }
 }
+
+exports.applyJobHandler = async (req,res) => {
+  let user = req.user;
+  let jobId = req.params.jobId;
+  try{
+    let job = await Job.findById(jobId);
+    job.volunteers.push(user._id.toString());
+    if(job.volunteers.length === job.volunteerRequired) job.status = false;
+    job.save();
+    return sendSuccess(res,{
+      msg: 'Succesfully registered for the job'
+    })
+  } catch (e) {
+    return sendError(
+      res,
+      "Failed to apply for the job",
+      BAD_REQUEST
+  );
+  }
+  
+}
