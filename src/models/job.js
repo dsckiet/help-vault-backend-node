@@ -1,15 +1,15 @@
 const Schema = require("mongoose").Schema;
 
-const geoSchema = new Schema({
-    type: {
-      type: String,
-      default: 'Point'
-    },
-    coordinates: {
-      type: [Number]
-    }
-  });  
-
+// const geoSchema = new Schema({
+//     type: {
+//       type: String,
+//       default: 'Point'
+//     },
+//     coordinates: {
+//       type: [Number]
+//     }
+//   });  
+const geoSchema = require("./geo");
 const jobSchema = new Schema({
     title: {
         type: String,
